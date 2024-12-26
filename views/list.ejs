@@ -1,0 +1,50 @@
+<%- include("header") -%>
+  <div class="box" id="heading">
+    <h1>
+      <%= listTitle %>
+    </h1>
+  </div>
+
+  <div class="box">
+
+    <% newListItem.forEach((element)=>{ %>
+      <form action="/delete" method="post">
+
+        <div class="item">
+          <input type="checkbox" name="checkbox" value="<%= element._id %>" onChange="this.form.submit()">
+          <p>
+            <%= element.name %>
+          </p>
+        </div>
+
+        <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+
+      </form>
+
+      <% }); %>
+
+        <form class="item" action="/" method="post">
+          <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+          <button type="submit" name="list" value="<%= listTitle %>">+</button>
+        </form>
+
+
+
+        <!-- The onChange attribute specifies that when the checkbox is clicked, the parent form should be submitted. This triggers a POST request. 
+        This is an input element of type hidden.
+        It stores the listTitle value in the form data, which will be sent to the server when the form is submitted.
+        This hidden input is used to send additional information to the server without displaying it on the page.
+
+        In summary, this code generates a list of items from the newListItem array. Each item is displayed with a checkbox, a name, and a hidden input for the listTitle. When a checkbox is checked, the corresponding form is submitted, triggering a POST request to the "/delete" endpoint. The server would handle the deletion of the selected item based on the data sent in the request.-->
+
+        <!-- 
+            The value attribute is used to assign a value to the button. When the form is submitted and this button is clicked, the assigned value will be included in the form data that is sent to the server.             
+            Once the form is submitted, the server-side code (e.g., in a back-end scripting language like Node.js, Python, etc.) can access the value of the button using its name attribute (list in this case). This allows the server to understand which list the user is interacting with and perform the appropriate actions. -->
+
+
+        <!-- if you console.log(req.body) in the app.post "/" route , a key value will appear in terminal (list :  <%= listTitle %>) and now we will apply logic based on this
+        * when you target the work route , then list : work -->
+  </div>
+
+
+  <%- include("footer") -%>
